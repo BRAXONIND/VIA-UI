@@ -1,65 +1,109 @@
-# [VIA Web Application](https://usevia.app) - Your keyboards best friend
+# Braxon VIA Configurator
 
-![android-chrome-192x192](https://user-images.githubusercontent.com/1714072/222621960-ddfb8ee6-a486-4c66-8852-b204ba7c807b.png)
+A custom VIA-based configurator made for **Braxon macropads**.
 
-[![Azure Static Web Apps CI/CD](https://github.com/the-via/app/actions/workflows/azure.yml/badge.svg)](https://github.com/the-via/app/actions/workflows/azure.yml)
+Website: [https://braxon.in/](https://braxon.in/)
 
-VIA is a powerful, open-source web-based interface for configuring your [QMK](https://qmk.fm)-powered mechanical keyboard. It allows you to customize your keymaps, create macros, and adjust RGB settings (if it has RGB) on the fly, without needing to recompile your keyboard's firmware. This makes keyboard customization easier and more accessible for everyone.
+This project is a customized version of the VIA web application, built for Braxon's own macropad products and custom configuration workflow. It keeps the familiar VIA-style experience while adding extra features made specifically for Braxon users.
 
-## Getting VIA to support your keyboard
+## About This Project
 
-Are you a keyboard maker or a developer interested in adding support for your keyboard? We welcome contributions to the VIA project!
+The Braxon VIA Configurator is designed to make macropad customization easier, faster, and more powerful. It allows users to configure keymaps, macros, display options, and debugging features from a clean web-based interface.
 
-1. The source code of the keyboard **has to be merged** in [QMK Firmware Repositories](https://github.com/qmk/qmk_firmware) Master branch.
-2. Your `keymaps/via` keymap **has to be merged** in [VIA's QMK Userspace Repository](https://github.com/the-via/qmk_userspace_via) Main branch.
-3. Create a definition in JSON format for your keyboard and submit it as a pull request to [VIA's Keyboards Repository](https://github.com/the-via/keyboards) Master branch.
+This version includes custom additions for Braxon macropads, including support for advanced macro management, gamepad keycodes, ST7789 display customization, focus timer features, and a similar configurator interface for wireless ZMK-based macropads.
 
-Please follow our [Specification documentation](https://www.caniusevia.com/docs/specification) carefully to ensure your pull request is smoothly reviewed and merged.
+## Key Features
 
-## Local development setup
+- Custom-made VIA UI for Braxon macropads
+- Support for gamepad keycodes
+- Macro renaming support
+- Up to 65 custom macros
+- Website-launch macros using webpage URLs
+- Application-launch macros using selected `.exe` files
+- ST7789 display support
+- Custom names for macros and keycodes
+- Built-in focus timer with support for up to 99 minutes
+- Debug mode for testing and troubleshooting
+- Custom configurator UI for wireless ZMK-based macropads
+- Extra ZMK customization features not available in standard ZMK tools
 
-Start by cloning [`the-via/keyboards`](github.com/the-via/keyboards) then install dependencies with `npm install` and finally `npm run build`. You should see
-the output folder `dist`. This should be copied or symlinked to our repo's `public/definitions` folder.
+## Macro Features
+
+Users can create and manage custom macros directly from the configurator. These macros can be used for normal keyboard actions, opening websites, or launching applications.
+
+For website macros, users only need to enter the webpage URL.
+
+For application macros, users can select the required `.exe` file and assign it to a key or macro slot.
+
+## Display Features
+
+This configurator includes support for an **ST7789 display**. Users can customize macro names, keycode names, and display-related options from the interface.
+
+The display feature is designed for Braxon macropads that include screen support.
+
+## Focus Timer
+
+A built-in focus timer is included for productivity use. Users can set timer durations up to **99 minutes**, making the macropad useful for study sessions, work sessions, and focus-based workflows.
+
+## Debug Mode
+
+The configurator includes a debug mode for testing and troubleshooting. This helps users check whether keys, macros, display features, and other functions are working correctly.
+
+## Wireless ZMK Configurator
+
+Along with the QMK/VIA-based configurator, a similar UI has also been developed for wireless macropads running **ZMK**.
+
+This gives wireless macropad users access to many extra customization options that are not available in standard ZMK tools.
+
+## Local Development
+
+Install dependencies:
 
 ```bash
-# Inside the-via/app
-public/definitions -> ../../keyboards/dist
+npm install
 ```
 
-### Useful commands
+Run the development server:
 
-#### `npm run dev`
+```bash
+npm run dev
+```
 
-Runs the app in the development mode.
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+Open the local URL shown in the terminal, usually:
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+```text
+http://localhost:5173
+```
 
-#### `npm run build`
+Build for production:
 
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
+```bash
+npm run build
+```
 
-#### `npm run test`
+The production build will be generated in the `dist` folder.
 
-Launches the application test runner.
-Run with the `--watch` flag (`npm test -- --watch`) to run in interactive watch mode.
+## Deployment
 
----
+This project can be deployed using services like:
 
-This project is tested with [BrowserStack](https://www.browserstack.com/).
+- Vercel
+- Netlify
+- GitHub Pages
 
-## Looking for an offline app?
+For Vercel, use:
 
-@cebby2420 has kindly made a desktop app that does so.
+```text
+Build Command: npm run build
+Output Directory: dist
+```
 
-You can find it at [https://github.com/cebby2420/via-desktop](https://github.com/cebby2420/via-desktop).
+## Credits
 
-**NOTE: This project has no official affiliation with VIA, and we cannot provide support for it.**
+This project is based on the open-source VIA web application and customized for Braxon macropad use.
 
-## Facing Issues?
+VIA is an open-source web-based keyboard configurator for QMK-powered keyboards.
 
-If you encounter any issues or bugs while using the [VIA web application](https://usevia.app), please report them by opening an issue in the [Issues section](https://github.com/the-via/app/issues). This will help us to track down and resolve problems, and improve the VIA experience for everyone.
+## Disclaimer
 
-Before reporting, please make sure to check if an issue has already been reported. Thank you!
+This is a customized Braxon version for Braxon macropads and related development use. It is not an official VIA release unless stated otherwise by the VIA project maintainers.
