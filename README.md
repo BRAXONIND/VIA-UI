@@ -49,11 +49,6 @@ A built-in focus timer is included for productivity use. Users can set timer dur
 
 The configurator includes a debug mode for testing and troubleshooting. This helps users check whether keys, macros, display features, and other functions are working correctly.
 
-## Wireless ZMK Configurator
-
-Along with the QMK/VIA-based configurator, a similar UI has also been developed for wireless macropads running **ZMK**.
-
-This gives wireless macropad users access to many extra customization options that are not available in standard ZMK tools.
 
 ## Local Development
 
