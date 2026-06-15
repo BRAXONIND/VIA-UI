@@ -66,6 +66,7 @@ const nativeWindowsPicker = () => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.GITHUB_PAGES === 'true' ? '/VIA-UI/' : '/',
   plugins: [
     nativeWindowsPicker(),
     react(),
