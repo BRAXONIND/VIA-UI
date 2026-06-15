@@ -1,10 +1,10 @@
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {splitVendorChunkPlugin} from 'vite';
-import {createHtmlPlugin} from 'vite-plugin-html';
+import { splitVendorChunkPlugin } from 'vite';
+import { createHtmlPlugin } from 'vite-plugin-html';
 import fs from 'fs';
-import {execFile} from 'child_process';
+import { execFile } from 'child_process';
 
 const hash = fs.readFileSync('public/definitions/hash.json', 'utf8');
 
@@ -39,16 +39,26 @@ const nativeWindowsPicker = () => {
       execFile(
         'powershell.exe',
         ['-NoProfile', '-STA', '-Command', script],
-        {encoding: 'utf8', windowsHide: false},
+        { encoding: 'utf8', windowsHide: false },
         (error, stdout) => {
           response.setHeader('Content-Type', 'application/json');
+
           if (error) {
             response.statusCode = 500;
-            response.end(JSON.stringify({error: 'Unable to open picker'}));
+            response.end(
+              JSON.stringify({
+                error: 'Unable to open picker',
+              })
+            );
             return;
           }
-          response.end(JSON.stringify({path: stdout.trim()}));
-        },
+
+          response.end(
+            JSON.stringify({
+              path: stdout.trim(),
+            })
+          );
+        }
       );
     });
   };
@@ -64,11 +74,16 @@ const nativeWindowsPicker = () => {
   };
 };
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  base: '/',
+
   plugins: [
-    nativeWindowsPicker(),
+    ...(process.env.NODE_ENV === 'development'
+      ? [nativeWindowsPicker()]
+      : []),
+
     react(),
+
     createHtmlPlugin({
       inject: {
         data: {
@@ -76,26 +91,41 @@ export default defineConfig({
         },
       },
     }),
+
     splitVendorChunkPlugin(),
   ],
+
   assetsInclude: ['**/*.glb'],
+
   envDir: '.',
-  server: {open: true},
+
+  server: {
+    open: true,
+  },
+
+  preview: {
+    open: true,
+  },
+
   resolve: {
     alias: {
       src: path.resolve(__dirname, './src'),
       assets: path.resolve(__dirname, './src/assets'),
     },
   },
+
   optimizeDeps: {
     include: ['@the-via/reader'],
     esbuildOptions: {
-      // Node.js global to browser globalThis
       define: {
         global: 'globalThis',
       },
-      // Enable esbuild polyfill plugins
       plugins: [],
     },
+  },
+
+  build: {
+    sourcemap: false,
+    chunkSizeWarningLimit: 3000,
   },
 });
