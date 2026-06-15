@@ -5,7 +5,7 @@ const {
   keyboardDefinitionV3ToVIADefinitionV3,
 } = require('@the-via/reader');
 
-const sourcePath = path.resolve(__dirname, '..', '..', 'via.json');
+const sourcePath = path.resolve(__dirname, '..', 'via.json');
 const definitionsPath = path.resolve(__dirname, '..', 'public', 'definitions');
 const source = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
 const definition = keyboardDefinitionV3ToVIADefinitionV3(source);
