@@ -18,6 +18,7 @@ import {
   getCustomDefinitions,
   getSelectedDefinition,
 } from 'src/store/definitionsSlice';
+import {setForceAuthorize} from 'src/store/devicesSlice';
 import {reloadConnectedDevices} from 'src/store/devicesThunks';
 import {useAppDispatch, useAppSelector} from 'src/store/hooks';
 import {
@@ -109,6 +110,10 @@ export const NonSuspenseCanvasRouter = () => {
       dispatch(updateSelectedKey(null));
     }
   }, [dispatch]);
+  const authorizeDevice = useCallback(() => {
+    dispatch(setForceAuthorize(true));
+    dispatch(reloadConnectedDevices());
+  }, [dispatch]);
   const showAuthorizeButton = 'hid' in navigator || OVERRIDE_HID_CHECK;
   const hideCanvasScene =
     !showAuthorizeButton ||
@@ -166,7 +171,7 @@ export const NonSuspenseCanvasRouter = () => {
             {showAuthorizeButton ? (
               !selectedDefinition ? (
                 <AccentButtonLarge
-                  onClick={() => dispatch(reloadConnectedDevices())}
+                  onClick={authorizeDevice}
                   style={{width: 'max-content'}}
                 >
                   Authorize device

@@ -36,7 +36,7 @@ import {useDispatch} from 'react-redux';
 import {reloadConnectedDevices} from 'src/store/devicesThunks';
 import {getV3MenuComponents} from 'src/store/menusSlice';
 import {getIsMacroFeatureSupported} from 'src/store/macrosSlice';
-import {getConnectedDevices, getSupportedIds} from 'src/store/devicesSlice';
+import {getConnectedDevices, setForceAuthorize} from 'src/store/devicesSlice';
 import {isElectron} from 'src/utils/running-context';
 import {useAppDispatch} from 'src/store/hooks';
 import {MenuTooltip} from '../inputs/tooltip';
@@ -152,10 +152,12 @@ const Loader: React.FC<{
   const theme = useAppSelector(getSelectedTheme);
 
   const connectedDevices = useAppSelector(getConnectedDevices);
-  const supportedIds = useAppSelector(getSupportedIds);
-  const noSupportedIds = !Object.values(supportedIds).length;
   const noConnectedDevices = !Object.values(connectedDevices).length;
   const [showButton, setShowButton] = useState<boolean>(false);
+  const authorizeDevice = () => {
+    dispatch(setForceAuthorize(true));
+    dispatch(reloadConnectedDevices());
+  };
 
   useEffect(() => {
     // TODO: Remove the timeout because it is funky
@@ -169,8 +171,8 @@ const Loader: React.FC<{
   return (
     <LoaderPane>
       {<ChippyLoader theme={theme} progress={loadProgress || null} />}
-      {(showButton || noConnectedDevices) && !noSupportedIds && !isElectron ? (
-        <AccentButtonLarge onClick={() => dispatch(reloadConnectedDevices())}>
+      {(showButton || noConnectedDevices) && !isElectron ? (
+        <AccentButtonLarge onClick={authorizeDevice}>
           {t('Authorize device')}
           <FontAwesomeIcon style={{marginLeft: '10px'}} icon={faPlus} />
         </AccentButtonLarge>

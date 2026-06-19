@@ -198,6 +198,9 @@ export const reloadConnectedDevices =
       console.info('Setting connected device:', d.protocol, path, d);
     });
     dispatch(updateConnectedDevices(connectedDevices));
+    if (validDevicesArr.length > 0) {
+      dispatch(setForceAuthorize(false));
+    }
 
     // John you drongo, don't trust the compiler, dispatches are totes awaitable for async thunks
     // If we haven't chosen a selected device yet and there is a valid device, try that
