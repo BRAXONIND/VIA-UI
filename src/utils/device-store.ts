@@ -57,6 +57,7 @@ function initDeviceStore() {
 initDeviceStore();
 
 // TODO: invalidate cache if we change cache structure
+const assetUrl = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 /** Retreives the latest definition index and invalidates the definition cache if a new one is found */
 export async function syncStore(): Promise<DefinitionIndex> {
@@ -72,7 +73,7 @@ export async function syncStore(): Promise<DefinitionIndex> {
       return currentDefinitionIndex;
     }
     // Get definition index file
-    const response = await fetch('/definitions/supported_kbs.json', {
+    const response = await fetch(assetUrl('definitions/supported_kbs.json'), {
       cache: 'reload',
     });
     const json: KeyboardDefinitionIndex = await response.json();
@@ -120,7 +121,7 @@ export const getMissingDefinition = async <
   version: K,
 ): Promise<[DefinitionVersionMap[K], K]> => {
   const vpid = getVendorProductId(device.vendorId, device.productId);
-  const url = `/definitions/${version}/${vpid}.json`;
+  const url = assetUrl(`definitions/${version}/${vpid}.json`);
   const response = await fetch(url);
   const json: DefinitionVersionMap[K] = await response.json();
   let definitions = deviceStore.get('definitions');
