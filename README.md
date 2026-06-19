@@ -19,7 +19,7 @@ This version includes custom additions for Braxon macropads, including support f
 - Macro renaming support
 - Up to 65 custom macros
 - Website-launch macros using webpage URLs
-- Application-launch macros using selected `.exe` files
+- Application-launch macros using typed app names or paths
 - ST7789 display support
 - Custom names for macros and keycodes
 - Built-in focus timer with support for up to 99 minutes
@@ -33,7 +33,7 @@ Users can create and manage custom macros directly from the configurator. These 
 
 For website macros, users only need to enter the webpage URL.
 
-For application macros, users can select the required `.exe` file and assign it to a key or macro slot.
+For application macros, users can type the required app name or path and assign it to a key or macro slot.
 
 ## Display Features
 

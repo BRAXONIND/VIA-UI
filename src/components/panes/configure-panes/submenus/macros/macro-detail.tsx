@@ -7,7 +7,6 @@ import {
   faClapperboard,
   faCode,
   faCopy,
-  faFolderOpen,
   faPaste,
   faRocket,
   faSearch,
@@ -132,17 +131,8 @@ const LaunchLabel = styled.label`
 
 const LaunchRow = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 48px 88px;
+  grid-template-columns: minmax(0, 1fr) 88px;
   gap: 10px;
-`;
-
-const LauncherIconButton = styled(AccentButton)`
-  width: 48px;
-  min-width: 48px;
-  height: 44px;
-  padding: 0;
-  line-height: 44px;
-  font-size: 17px;
 `;
 
 const LauncherSaveButton = styled(AccentButton)`
@@ -663,7 +653,6 @@ export const MacroDetailPane: React.FC<Props> = (props) => {
   const isDelaySupported = useAppSelector(getIsDelaySupported);
   const [unsavedMacro, setUnsavedMacro] = useState(currentMacro);
   const [launchCommand, setLaunchCommand] = useState('');
-  const [isPickingApp, setIsPickingApp] = useState(false);
   const [isSavingQuickMacro, setIsSavingQuickMacro] = useState(false);
   const [quickSearch, setQuickSearch] = useState('');
   const [quickCategory, setQuickCategory] = useState('All');
@@ -781,24 +770,6 @@ export const MacroDetailPane: React.FC<Props> = (props) => {
     return categoryMatches && searchMatches;
   });
 
-  const selectWindowsApp = async () => {
-    setIsPickingApp(true);
-    try {
-      const response = await fetch('/api/select-executable');
-      if (!response.ok) {
-        return;
-      }
-      const result = (await response.json()) as {path?: string};
-      if (result.path) {
-        setLaunchCommand(`"${result.path}"`);
-      }
-    } catch {
-      // Keep the current command when the native picker is unavailable.
-    } finally {
-      setIsPickingApp(false);
-    }
-  };
-
   return (
     <>
       <CenterTabContainer>
@@ -866,13 +837,13 @@ export const MacroDetailPane: React.FC<Props> = (props) => {
           <LaunchGrid>
             <LaunchSection>
               <LaunchLabel htmlFor="macro-launch-command">
-                Windows launcher
+                Launcher
               </LaunchLabel>
               <LaunchRow>
                 <LaunchInput
                   id="macro-launch-command"
                   value={launchCommand}
-                  placeholder="Website URL, app name, or .exe"
+                  placeholder="Website URL, app name, or path"
                   spellCheck={false}
                   onChange={(event) => setLaunchCommand(event.target.value)}
                   onKeyDown={(event) => {
@@ -884,12 +855,6 @@ export const MacroDetailPane: React.FC<Props> = (props) => {
                     }
                   }}
                 />
-                <LauncherIconButton
-                  disabled={isPickingApp}
-                  onClick={selectWindowsApp}
-                >
-                  <FontAwesomeIcon icon={faFolderOpen} />
-                </LauncherIconButton>
                 <LauncherSaveButton
                   disabled={!launchCommand.trim()}
                   onClick={() => {
